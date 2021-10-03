@@ -13,10 +13,10 @@ function ItemAdded() {
     const [count, setCount] = useState(1)
 
     const handleSubmit = () => {
-        setCount( count+1)
-
-        data.setName([...data.name, { id:count , names: newHeader, links:newLink, vote:0}])
+        setCount(count + 1)
         localStorage.setItem("data", JSON.stringify(data))
+        data.setName([...data.name, { id: count, names: newHeader, links: newLink, vote: 0 }])
+
         setNewHeader("")
         setNewLink("")
     }
@@ -38,7 +38,7 @@ function ItemAdded() {
             <button className="btn btn-primary mt-4" name="forms" type="submit" onClick={() => handleSubmit()
             }
             > ADD</button>
-           
+
         </Container>
     )
 }

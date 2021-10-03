@@ -1,26 +1,41 @@
 import './style.scss'
 import { Col, Container, Row, Card } from 'reactstrap';
-import { useContext, useState,useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import TodoContext from '../context/TodoContext';
 
 function Home() {
     const [lsData, setLsData] = useState(JSON.parse(localStorage.getItem("data")))
     const data = useContext(TodoContext)
+
+    const [count, setCount] = useState(0)
+
     console.log("data", data)
     console.log("lsData", lsData)
- const [count, setCount] = useState("")
- 
-    const handleClickIncrease = (index,item) => {
-        console.log(index)
-   item.vote =  
-   
-  setCount( Number(count +1))
 
-  
+    useEffect( () => () => console.log("local storage a yazılacak"), [] );
+
+    const handleClickIncrease = (index, item) => {
+        lsData.name.map((data) => {
+            if(data.id === item.id) {
+                data.vote = count
+            }
+        })
+     
+        setCount(Number(count + 1))
+        item.vote = Number(count)
+        localStorage.setItem("data", JSON.stringify(lsData))
+
     }
-    const hanleClickDecrease = (index) => {
-        console.log(index)
+
+
+
+
+
+    const hanleClickDecrease = (item) => {
+        setCount(Number(count - 1))
+        item.vote = Number(count)
+
 
     }
 
@@ -58,12 +73,14 @@ function Home() {
                                     <div className="d-flex justify-content-between mt-2">
                                         <i onClick={() => {
                                             if (index === item.id) {
-                                                handleClickIncrease(index,item)
+                                                handleClickIncrease(index, item)
                                             }
 
                                         }} className="fas fa-arrow-up text-secondary"> Up Vote</i>
                                         <i onClick={() => {
-                                            hanleClickDecrease(index)
+                                            if (item.vote > 0) {
+                                                hanleClickDecrease(index, item)
+                                            }
                                         }} className="fas fa-arrow-down text-secondary"> Down Vote</i>
 
                                     </div>
