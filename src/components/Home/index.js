@@ -3,25 +3,25 @@ import { Col, Container, Row, Card } from 'reactstrap';
 import { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import TodoContext from '../context/TodoContext';
+import { nanoid } from '@reduxjs/toolkit';
 
 function Home() {
     const [lsData, setLsData] = useState(JSON.parse(localStorage.getItem("data")))
+    const [count, setCount] = useState(0)
     const data = useContext(TodoContext)
 
-    const [count, setCount] = useState(0)
+    const [option, setOption] = useState([])
 
-    console.log("data", data)
-    console.log("lsData", lsData)
 
-    useEffect( () => () => console.log("local storage a yazılacak"), [] );
+    useEffect(() => () => console.log("local storage a yazılacak"), []);
 
-    const handleClickIncrease = (index, item) => {
+    const handleClickIncrease = (item) => {
         lsData.name.map((data) => {
-            if(data.id === item.id) {
+            if (data.id === item.id) {
                 data.vote = count
             }
         })
-     
+
         setCount(Number(count + 1))
         item.vote = Number(count)
         localStorage.setItem("data", JSON.stringify(lsData))
@@ -29,16 +29,27 @@ function Home() {
     }
 
 
-
-
-
     const hanleClickDecrease = (item) => {
-        setCount(Number(count - 1))
-        item.vote = Number(count)
+        if (count >= 0) {
+            setCount(Number(count - 1))
+            item.vote = Number(count)
+            localStorage.setItem("data", JSON.stringify(lsData))
 
-
+        }
     }
 
+    if (option === "Most") {
+        var liste = lsData.name.map((data) => data.vote)
+
+        const arrangement = liste.sort(function (a, b) { return b - a });
+    console.log(arrangement)
+
+    } if (option === "Less") {
+        var liste = lsData.name.map((data) => data.vote)
+
+        const arrangement = liste.sort(function (a, b) { return a - b });
+    console.log(arrangement)
+    }
     return (
         <Container className="width">
             <Row>
@@ -52,17 +63,17 @@ function Home() {
             <Col>
                 <div>
                     <div className="text-center selectInput mx-auto">
-                        <select className="form-select form-select-lg mb-3 " aria-label=".form-select-lg example">
-                            <option >Order By</option>
-                            <option>Most Voted (A-Z) </option>
-                            <option>Less Voted (Z-A) </option>
+                        <select value={option} multiple={false} onChange={(e) => setOption(e.target.value)} className="form-select form-select-lg mb-3 " aria-label=".form-select-lg example">
+                            <option   >Order By</option>
+                            <option value="Most" >Most Voted (A-Z) </option>
+                            <option value="Less">Less Voted (Z-A) </option>
                         </select>
                     </div>
                     <div>
-                        {lsData ? lsData.name.map((item, index) =>
-                            <Row key={index} id={item.id} >
-                                <Col xs="3" key={index}>
-                                    <Card className="bg-light text-center p-1 mb-2" key={index}>
+                        {lsData ? lsData.name.map((item) =>
+                            <Row key={nanoid()} id={item.id} >
+                                <Col xs="3" key={nanoid()}>
+                                    <Card className="bg-light text-center p-1 mb-2" key={nanoid()}>
                                         <span className="h1">{item.vote}</span>
                                         <span className="h3">Points</span>
                                     </Card>
@@ -72,15 +83,14 @@ function Home() {
                                     <a href={item.links} target="_blank" className="text-secondary ">({item.links})</a>
                                     <div className="d-flex justify-content-between mt-2">
                                         <i onClick={() => {
-                                            if (index === item.id) {
-                                                handleClickIncrease(index, item)
+                                            if (item.id) {
+                                                handleClickIncrease(item)
                                             }
 
                                         }} className="fas fa-arrow-up text-secondary"> Up Vote</i>
                                         <i onClick={() => {
-                                            if (item.vote > 0) {
-                                                hanleClickDecrease(index, item)
-                                            }
+                                            hanleClickDecrease(item)
+
                                         }} className="fas fa-arrow-down text-secondary"> Down Vote</i>
 
                                     </div>

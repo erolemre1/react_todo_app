@@ -1,22 +1,26 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Container, Row } from 'reactstrap';
+import { Container } from 'reactstrap';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import "./style.scss"
 import { Link } from 'react-router-dom';
 import TodoContext from '../context/TodoContext';
+import { nanoid } from 'nanoid'
 
 function ItemAdded() {
     const [newHeader, setNewHeader] = useState("")
     const [newLink, setNewLink] = useState("")
     const data = useContext(TodoContext)
 
-    const [count, setCount] = useState(1)
+    useEffect(() => {
+        localStorage.setItem("data", JSON.stringify(...[data], data))
+    })
+    //burada initial state i local storageye atıyoruz
+
 
     const handleSubmit = () => {
-        setCount(count + 1)
-        localStorage.setItem("data", JSON.stringify(data))
-        data.setName([...data.name, { id: count, names: newHeader, links: newLink, vote: 0 }])
-
+        data.setName([...data.name, { id: nanoid(), names: newHeader, links: newLink, vote: 0 }])
+        localStorage.setItem("data", JSON.stringify(...[data], data))
+        // burada click anında local storageden eski verinin kopyasını alıp eklediğimizle birlikte güncelliyoruz
         setNewHeader("")
         setNewLink("")
     }
