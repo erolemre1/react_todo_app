@@ -7,5 +7,13 @@
 }
 
 .deleteBtn{
+visibility: hidden;
+}
+
+.row:hover .deleteBtn{
+    visibility: visible;
+}
+.row:hover{
+    background: #ebebee;
 
 }

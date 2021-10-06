@@ -5,6 +5,8 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 import { TodoProvider } from "../src/components/context/TodoContext";
+import "alertifyjs/build/css/alertify.min.css"
+
 
 
 ReactDOM.render(
