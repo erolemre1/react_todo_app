@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { nanoid } from '@reduxjs/toolkit';
 
 function Home() {
+
     const [lsData, setLsData] = useState(JSON.parse(localStorage.getItem("data")))
     const [count, setCount] = useState(0)
     const [option, setOption] = useState([])
@@ -38,9 +39,7 @@ function Home() {
 
 
     }
-    const handleMouseEnter = (item)=> {
 
-    }
 
     function handleOnChange(e) {
         setOption(e.target.value)
@@ -51,10 +50,20 @@ function Home() {
         } if (e.target.value === "Less") {
             var liste = lsData.name.map((data) => data)
             const arrangement = liste.sort(function (a, b) { return a.vote - b.vote });
-            console.log("arrangement less", arrangement)
             setLsData({ name: arrangement })
 
         }
+    }
+    const handleDelete = (item) => {
+
+        const filtered = lsData.name.filter(lsItem => item.id !== lsItem.id, [lsData])
+        setLsData({ name: filtered })
+        localStorage.setItem("data", JSON.stringify(filtered))
+
+    }
+    const handleMouseEnter = (item, e) => {
+        const target = e.currentTarget
+        console.log(target)
     }
 
 
@@ -78,29 +87,29 @@ function Home() {
                         </select>
                     </div>
                     <div>
-                        {lsData ? lsData.name.map((item) =>
-                            <Row key={nanoid()} id={item.id} onMouseEnter={()=>handleMouseEnter(item)} >
+                        {lsData.name ? lsData.name.map((item) =>
+                            <Row key={nanoid()} id={item.id} className="mt-3 mb-3" >
                                 <Col xs="3" key={nanoid()}>
                                     <Card className="bg-light text-center p-1 mb-2" key={nanoid()}>
                                         <span className="h1">{item.vote}</span>
                                         <span className="h3">Points</span>
                                     </Card>
                                 </Col>
-                                <Col xs="9" >
-                                    <h2>  {item.names}</h2>
+                                <Col xs="9" className="selectedd" onMouseEnter={(e) => handleMouseEnter(item, e)} >
+                                    <div className="d-flex justify-content-between">
+                                        <h2 >  {item.names}  </h2>
+                                        <span id={item.id} value="delete" onClick={(e) => handleDelete(item)} className="deleteBtn text-white border h3 rounded-circle  bg-danger p-1">-</span>
+                                    </div>
                                     <a href={item.links} target="_blank" className="text-secondary ">({item.links})</a>
                                     <div className="d-flex justify-content-between mt-2">
                                         <i onClick={() => {
                                             if (item.id) {
                                                 handleClickIncrease(item)
                                             }
-
                                         }} className="fas fa-arrow-up text-secondary"> Up Vote</i>
                                         <i onClick={() => {
                                             hanleClickDecrease(item)
-
                                         }} className="fas fa-arrow-down text-secondary"> Down Vote</i>
-
                                     </div>
                                 </Col>
                             </Row>) : <div className="text-center text-danger h1">There are no items!!!</div>}
