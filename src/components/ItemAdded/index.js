@@ -36,25 +36,26 @@ function ItemAdded() {
 
 
     return (
-        <Container>
-            <div className="text-center mt-5 mb-3">
-                <Link to="/" className="text-decoration-none h4 ">  <AiOutlineArrowLeft></AiOutlineArrowLeft> Return To List</Link>
+        <Container className="text-center mt-5">
+            <div>
+                <Link to="/" className="text-decoration-none h4">  <AiOutlineArrowLeft></AiOutlineArrowLeft> Return To List</Link>
+                <h1 className="text-center">Add New Item</h1>
             </div>
-            <h1 className="text-center">Add New List</h1>
             <br />
-            <form  className="text-center">
-                <label htmlFor="text"> Link Name</label> <br />
-                <input type="text" className="new-todo p-2" name="forms" placeholder="e.g. Alphabet " value={newHeader} autoFocus onChange={(e) => setNewHeader(e.target.value)} />
+            <div> 
+            <form >
+                <label htmlFor=""> Link Name</label> <br />
+                <input type="text" className="new-todo w-50 p-2" name="forms" placeholder="e.g. Alphabet " value={newHeader} autoFocus onChange={(e) => setNewHeader(e.target.value)} />
                 <br />
                 <br />
-                <label htmlFor="text">Link Url</label> <br />
-                <input type="text" className="new-todo p-2" name="forms" placeholder="e.g. http://abc.xyz " autoFocus value={newLink}
-                    onChange={(e) => setNewLink(e.target.value)} /> <br />
-                     <button className="btn btn-primary mt-4 px-3" name="forms" type="submit" onClick={() => handleSubmit()
+                <label htmlFor=""> Link Url</label> <br />
+                <input type="text" className="new-todo w-50 p-2" name="forms" placeholder="e.g. http://abc.xyz " autoFocus value={newLink}
+                    onChange={(e) => setNewLink(e.target.value)} />
+            </form>
+            <button className="btn btn-primary mt-4 px-3 " name="forms" type="submit" onClick={() => handleSubmit()
             }
             > ADD</button>
-            </form>
-           
+            </div>
 
         </Container>
     )

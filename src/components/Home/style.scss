@@ -10,10 +10,10 @@
 visibility: hidden;
 }
 
-.row:hover .deleteBtn{
+.rowItem:hover .deleteBtn{
     visibility: visible;
 }
-.row:hover{
+.rowItem:hover{
     background: #ebebee;
 
 }
