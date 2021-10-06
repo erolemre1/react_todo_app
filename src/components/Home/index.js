@@ -1,55 +1,63 @@
 import './style.scss'
 import { Col, Container, Row, Card } from 'reactstrap';
-import { useContext, useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import TodoContext from '../context/TodoContext';
 import { nanoid } from '@reduxjs/toolkit';
 
 function Home() {
     const [lsData, setLsData] = useState(JSON.parse(localStorage.getItem("data")))
     const [count, setCount] = useState(0)
-    const data = useContext(TodoContext)
-
     const [option, setOption] = useState([])
-
-
-    useEffect(() => () => console.log("local storage a yazılacak"), []);
-
-    const handleClickIncrease = (item) => {
-        lsData.name.map((data) => {
-            if (data.id === item.id) {
-                data.vote = count
-            }
-        })
-
-        setCount(Number(count + 1))
-        item.vote = Number(count)
+    const lsAdded = () => {
         localStorage.setItem("data", JSON.stringify(lsData))
-
     }
 
 
+    const handleClickIncrease = (item) => {
+        lsData.name.map((data) => {
+
+            if (data.id === item.id) {
+                item.vote = item.vote + 1
+                setCount(item.vote)
+            }
+        })
+        lsAdded()
+
+    }
+
     const hanleClickDecrease = (item) => {
-        if (count >= 0) {
-            setCount(Number(count - 1))
-            item.vote = Number(count)
-            localStorage.setItem("data", JSON.stringify(lsData))
+        lsData.name.map((data) => {
+
+            if (data.id === item.id) {
+                item.vote = item.vote - 1
+                setCount(item.vote)
+            }
+        })
+
+        lsAdded()
+
+
+    }
+    const handleMouseEnter = (item)=> {
+
+    }
+
+    function handleOnChange(e) {
+        setOption(e.target.value)
+        if (e.target.value === "Most") {
+            var liste = lsData.name.map((data) => data)
+            const arrangement = liste.sort(function (a, b) { return b.vote - a.vote });
+            setLsData({ name: arrangement })
+        } if (e.target.value === "Less") {
+            var liste = lsData.name.map((data) => data)
+            const arrangement = liste.sort(function (a, b) { return a.vote - b.vote });
+            console.log("arrangement less", arrangement)
+            setLsData({ name: arrangement })
 
         }
     }
 
-    if (option === "Most") {
-        var liste = lsData.name.map((data) => data.vote)
 
-        const arrangement = liste.sort(function (a, b) { return b - a });
-    console.log(arrangement)
-
-    } if (option === "Less") {
-        var liste = lsData.name.map((data) => data.vote)
-
-        const arrangement = liste.sort(function (a, b) { return a - b });
-    console.log(arrangement)
-    }
     return (
         <Container className="width">
             <Row>
@@ -63,15 +71,15 @@ function Home() {
             <Col>
                 <div>
                     <div className="text-center selectInput mx-auto">
-                        <select value={option} multiple={false} onChange={(e) => setOption(e.target.value)} className="form-select form-select-lg mb-3 " aria-label=".form-select-lg example">
-                            <option   >Order By</option>
-                            <option value="Most" >Most Voted (A-Z) </option>
+                        <select value={option} multiple={false} onChange={(e) => handleOnChange(e)} className="form-select form-select-lg mb-3 " aria-label=".form-select-lg example">
+                            <option >Order By</option>
+                            <option value="Most">Most Voted (A-Z) </option>
                             <option value="Less">Less Voted (Z-A) </option>
                         </select>
                     </div>
                     <div>
                         {lsData ? lsData.name.map((item) =>
-                            <Row key={nanoid()} id={item.id} >
+                            <Row key={nanoid()} id={item.id} onMouseEnter={()=>handleMouseEnter(item)} >
                                 <Col xs="3" key={nanoid()}>
                                     <Card className="bg-light text-center p-1 mb-2" key={nanoid()}>
                                         <span className="h1">{item.vote}</span>
