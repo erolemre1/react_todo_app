@@ -72,7 +72,7 @@ function Home() {
                 </div> : null}
 
                 <div>
-                    {lsData ? lsData.name.map((item) =>
+                    {lsData.name ? lsData.name.map((item) =>
 
                         <Row key={nanoid()} id={item.id} className="mt-3 mb-3 rowItem" >
                             <Col xs="3" key={nanoid()}>
