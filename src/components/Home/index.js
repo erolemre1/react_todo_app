@@ -121,7 +121,7 @@ function Home() {
                             {/* Modalll Ending */}
                         </Row>) : <div className="text-center text-danger h1"> <Error message="There are no items!!!" /></div>}
                 </div>
-              //  {lsData.name.length > 0 ? <Pagination pages={totalPagesNum} setCurrentPage={setCurrentPage} /> : null}
+               {/* {lsData.name.length > 0 ? <Pagination pages={totalPagesNum} setCurrentPage={setCurrentPage} /> : null} */}
             </Col>
         </Container>
     )
