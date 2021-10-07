@@ -55,10 +55,10 @@ function Home() {
         localStorage.setItem("data", JSON.stringify(filtered))
         alertify.error(JSON.stringify(item.names) + " deleted.", 2)
     }
-    const indexOfLastItem = currentPage * itemPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = lsData.name ? lsData.name.slice(indexOfLastItem, indexOfFirstItem) : null
-    const totalPagesNum = Math.ceil(lsData.name ? lsData.name.length / itemPerPage : null)
+   // const indexOfLastItem = currentPage * itemPerPage;
+   // const indexOfFirstItem = indexOfLastItem - itemPerPage;
+  //  const currentItems = lsData.name ? lsData.name.slice(indexOfLastItem, indexOfFirstItem) : null
+   // const totalPagesNum = Math.ceil(lsData.name ? lsData.name.length / itemPerPage : null)
     return (
         <Container className="width">
             <IteItemLink />
@@ -72,7 +72,7 @@ function Home() {
                 </div> : null}
 
                 <div>
-                    {lsData.name.length ? lsData.name.map((item) =>
+                    {lsData ? lsData.name.map((item) =>
 
                         <Row key={nanoid()} id={item.id} className="mt-3 mb-3 rowItem" >
                             <Col xs="3" key={nanoid()}>
@@ -121,7 +121,7 @@ function Home() {
                             {/* Modalll Ending */}
                         </Row>) : <div className="text-center text-danger h1"> <Error message="There are no items!!!" /></div>}
                 </div>
-                {lsData.name.length > 0 ? <Pagination pages={totalPagesNum} setCurrentPage={setCurrentPage} /> : null}
+              //  {lsData.name.length > 0 ? <Pagination pages={totalPagesNum} setCurrentPage={setCurrentPage} /> : null}
             </Col>
         </Container>
     )
