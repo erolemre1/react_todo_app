@@ -1,13 +1,13 @@
 # React To Do
 
 ## Desktop View
-![web](https://github.com/erolemre1/react_breaking_bad_app/blob/main/BREAK%C4%B0NG-WEB.gif)
+![web](https://raw.githubusercontent.com/erolemre1/react_todo_app/main/todo-video.gif)
 
 
 ## Installation
 Clone the project.
 ```
-git clone https://github.com/erolemre1/react_breaking_bad_app.git
+git clone https://github.com/erolemre1/react_todo_app.git
 ```
 
 ## Usage
